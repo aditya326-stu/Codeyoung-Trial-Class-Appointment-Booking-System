@@ -1,0 +1,22 @@
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+**/gmail_credentials.json
+**/gmail_token.json
+**/*credentials*.json
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Node.js
+node_modules/
+dist/
+
+# Editors and operating system
+.vscode/
+.idea/
+.DS_Store

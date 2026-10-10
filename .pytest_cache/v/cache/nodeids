@@ -1,0 +1,10 @@
+[
+  "backend/tests/test_mentor_assignment.py::test_email_notifications_generation",
+  "backend/tests/test_mentor_assignment.py::test_full_system_capacity_20_classes_per_day",
+  "backend/tests/test_mentor_assignment.py::test_initial_mentors_count",
+  "backend/tests/test_mentor_assignment.py::test_mentor_max_two_classes_per_day",
+  "backend/tests/test_timezone.py::test_india_no_dst",
+  "backend/tests/test_timezone.py::test_local_to_utc_conversion",
+  "backend/tests/test_timezone.py::test_timezone_dst_summer_vs_winter",
+  "backend/tests/test_timezone.py::test_uk_dst_bst_vs_gmt"
+]
