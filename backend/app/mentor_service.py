@@ -12,6 +12,7 @@ import os
 from zoneinfo import ZoneInfo
 import uuid
 from typing import List, Dict, Optional, Tuple, Any
+from app.google_meet_service import create_google_meet
 
 from app.models import Mentor, Booking, BookingRequest, EmailNotification, SlotInfo, DaySlotsResponse
 from app.timezone_utils import (
@@ -309,8 +310,6 @@ class BookingStore:
             return None, f"No mentors are available at {req.slot_time} on {req.slot_date} in your timezone ({req.parent_timezone}). All mentors are currently booked or outside active hours. Please choose another time slot."
 
         booking_id = f"CY-TRIAL-{uuid.uuid4().hex[:8].upper()}"
-        room_id = f"demo-room-{uuid.uuid4().hex[:6]}"
-        meeting_link = f"http://localhost:8000/live-class?room={room_id}&booking={booking_id}"
 
         utc_end_dt = utc_dt + timedelta(hours=1)
         parent_fmt = format_datetime_for_tz(utc_dt, req.parent_timezone)
@@ -335,10 +334,25 @@ class BookingStore:
             mentor_timezone=mentor.timezone,
             mentor_display_time=f"{mentor_fmt['formatted_full']}",
             mentor_ist_date=ist_date_str,
-            demo_meeting_link=meeting_link,
+            demo_meeting_link="",
             created_at=datetime.now(ZoneInfo("UTC")).isoformat(),
             status="confirmed"
         )
+        
+        # Generate a real Google Meet link for this booking.
+        try:
+            booking.demo_meeting_link = create_google_meet(booking)
+        except Exception:
+            logger.exception(
+                "Google Meet creation failed for booking %s",
+                booking.id,
+            )
+            return None, (
+                "Unable to create the Google Meet link. "
+                "Please try again later."
+            )
+
+
         # Save the booking in MongoDB first, then update the in-memory cache.
         self.bookings_collection.insert_one(booking.model_dump())
         self.bookings.append(booking)

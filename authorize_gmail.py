@@ -6,7 +6,10 @@ PROJECT_ROOT = Path(__file__).resolve().parent
 CREDENTIALS_FILE = PROJECT_ROOT / "gmail_credentials.json"
 TOKEN_FILE = PROJECT_ROOT / "gmail_token.json"
 
-SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
+SCOPES = [
+    "https://www.googleapis.com/auth/gmail.send",
+    "https://www.googleapis.com/auth/calendar.events",
+]
 
 
 def main():

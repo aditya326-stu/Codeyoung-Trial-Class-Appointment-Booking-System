@@ -10,7 +10,10 @@ from googleapiclient.discovery import build
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 TOKEN_FILE = PROJECT_ROOT / "gmail_token.json"
-SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
+SCOPES = [
+    "https://www.googleapis.com/auth/gmail.send",
+    "https://www.googleapis.com/auth/calendar.events",
+]
 
 logger = logging.getLogger(__name__)
 
